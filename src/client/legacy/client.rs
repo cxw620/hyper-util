@@ -14,6 +14,8 @@ use std::time::Duration;
 use futures_util::future::{self, Either, FutureExt, TryFutureExt};
 use http::uri::Scheme;
 use hyper::client::conn::TrySendError as ConnTrySendError;
+#[cfg(feature = "http2")]
+use hyper::ext::{FramePriority, FrameStreamDependency, PseudoType};
 use hyper::header::{HeaderValue, HOST};
 use hyper::rt::Timer;
 use hyper::{body::Body, Method, Request, Response, Uri, Version};
@@ -1468,6 +1470,105 @@ impl Builder {
     #[cfg_attr(docsrs, doc(cfg(feature = "http2")))]
     pub fn http2_max_concurrent_reset_streams(&mut self, max: usize) -> &mut Self {
         self.h2_builder.max_concurrent_reset_streams(max);
+        self
+    }
+
+    /// Sets the header table size.
+    ///
+    /// This setting informs the peer of the maximum size of the header compression
+    /// table used to encode header blocks, in octets. The encoder may select any value
+    /// equal to or less than the header table size specified by the sender.
+    ///
+    /// The default value of crate `h2` is 4,096.
+    #[cfg(feature = "http2")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "http2")))]
+    pub fn http2_header_table_size(&mut self, size: impl Into<Option<u32>>) -> &mut Self {
+        self.h2_builder.header_table_size(size);
+        self
+    }
+
+    /// Enables or disables server push promises.
+    ///
+    /// This value is included in the initial SETTINGS handshake.
+    /// Setting this value to value to
+    /// false in the initial SETTINGS handshake guarantees that the remote server
+    /// will never send a push promise.
+    ///
+    /// This setting can be changed during the life of a single HTTP/2
+    /// connection by sending another settings frame updating the value.
+    ///
+    /// Default value of crate `h2`: `true`.
+    #[cfg(feature = "http2")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "http2")))]
+    pub fn http2_enable_push(&mut self, enabled: bool) -> &mut Self {
+        self.h2_builder.enable_push(enabled);
+        self
+    }
+
+    /// Sets the maximum number of concurrent streams.
+    ///
+    /// The maximum concurrent streams setting only controls the maximum number
+    /// of streams that can be initiated by the remote peer. In other words,
+    /// when this setting is set to 100, this does not limit the number of
+    /// concurrent streams that can be created by the caller.
+    ///
+    /// It is recommended that this value be no smaller than 100, so as to not
+    /// unnecessarily limit parallelism. However, any value is legal, including
+    /// 0. If `max` is set to 0, then the remote will not be permitted to
+    /// initiate streams.
+    ///
+    /// Note that streams in the reserved state, i.e., push promises that have
+    /// been reserved but the stream has not started, do not count against this
+    /// setting.
+    ///
+    /// Also note that if the remote *does* exceed the value set here, it is not
+    /// a protocol level error. Instead, the `h2` library will immediately reset
+    /// the stream.
+    ///
+    /// See [Section 5.1.2] in the HTTP/2 spec for more details.
+    ///
+    /// [Section 5.1.2]: https://http2.github.io/http2-spec/#rfc.section.5.1.2
+    #[cfg(feature = "http2")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "http2")))]
+    pub fn http2_max_concurrent_streams(&mut self, max: impl Into<Option<u32>>) -> &mut Self {
+        self.h2_builder.max_concurrent_streams(max);
+        self
+    }
+
+    /// Sets the `Headers` frame pseudo order.
+    ///
+    /// The pseudo header order setting controls the order of pseudo headers in the
+    /// serialized HTTP/2 headers. The default value is `None`, which means that
+    /// we let the `miku-h2` crate decide the order.
+    #[cfg(feature = "http2")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "http2")))]
+    pub fn http2_headers_frame_pseudo_order(
+        &mut self,
+        order: impl Into<Option<&'static [PseudoType; 4]>>,
+    ) -> &mut Self {
+        self.h2_builder.headers_frame_pseudo_order(order);
+        self
+    }
+
+    /// Sets the `Headers` frame priority.
+    #[cfg(feature = "http2")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "http2")))]
+    pub fn headers_frame_priority(
+        &mut self,
+        priority: impl Into<Option<FrameStreamDependency>>,
+    ) -> &mut Self {
+        self.h2_builder.headers_frame_priority(priority);
+        self
+    }
+
+    /// Sets the `Priority` frames (settings) for virtual streams.
+    #[cfg(feature = "http2")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "http2")))]
+    pub fn virtual_streams_priorities(
+        &mut self,
+        priorities: impl Into<Option<&'static [FramePriority]>>,
+    ) -> &mut Self {
+        self.h2_builder.virtual_streams_priorities(priorities);
         self
     }
 
