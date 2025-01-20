@@ -75,7 +75,7 @@ impl<E> Builder<E> {
     /// # Example
     ///
     /// ```
-    /// use hyper_util::{
+    /// use miku_hyper_util::{
     ///     rt::TokioExecutor,
     ///     server::conn::auto,
     /// };

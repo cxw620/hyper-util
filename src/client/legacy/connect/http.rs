@@ -41,7 +41,7 @@ pub struct HttpConnector<R = GaiResolver> {
 ///
 /// ```
 /// # fn doc(res: http::Response<()>) {
-/// use hyper_util::client::legacy::connect::HttpInfo;
+/// use miku_hyper_util::client::legacy::connect::HttpInfo;
 ///
 /// // res = http::Response
 /// res

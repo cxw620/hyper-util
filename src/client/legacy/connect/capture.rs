@@ -28,7 +28,7 @@ pub struct CaptureConnection {
 /// established. This is ideal for situations where you are certain the connection has already
 /// been established (e.g. after the response future has already completed).
 /// ```rust
-/// use hyper_util::client::legacy::connect::capture_connection;
+/// use miku_hyper_util::client::legacy::connect::capture_connection;
 /// let mut request = http::Request::builder()
 ///   .uri("http://foo.com")
 ///   .body(())
@@ -47,9 +47,9 @@ pub struct CaptureConnection {
 /// ```rust
 /// # #[cfg(feature  = "tokio")]
 /// # async fn example() {
-/// use hyper_util::client::legacy::connect::capture_connection;
-/// use hyper_util::client::legacy::Client;
-/// use hyper_util::rt::TokioExecutor;
+/// use miku_hyper_util::client::legacy::connect::capture_connection;
+/// use miku_hyper_util::client::legacy::Client;
+/// use miku_hyper_util::rt::TokioExecutor;
 /// use bytes::Bytes;
 /// use http_body_util::Empty;
 /// let mut request = http::Request::builder()

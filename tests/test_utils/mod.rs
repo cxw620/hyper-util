@@ -12,9 +12,9 @@ use tokio::net::TcpStream;
 
 use hyper::rt::ReadBufCursor;
 
-use hyper_util::client::legacy::connect::HttpConnector;
-use hyper_util::client::legacy::connect::{Connected, Connection};
-use hyper_util::rt::TokioIo;
+use miku_hyper_util::client::legacy::connect::HttpConnector;
+use miku_hyper_util::client::legacy::connect::{Connected, Connection};
+use miku_hyper_util::rt::TokioIo;
 
 #[derive(Clone)]
 pub struct DebugConnector {

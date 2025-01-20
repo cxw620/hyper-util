@@ -123,8 +123,8 @@ impl Client<(), ()> {
     /// # #[cfg(feature = "tokio")]
     /// # fn run () {
     /// use std::time::Duration;
-    /// use hyper_util::client::legacy::Client;
-    /// use hyper_util::rt::TokioExecutor;
+    /// use miku_hyper_util::client::legacy::Client;
+    /// use miku_hyper_util::rt::TokioExecutor;
     ///
     /// let client = Client::builder(TokioExecutor::new())
     ///     .pool_idle_timeout(Duration::from_secs(30))
@@ -164,8 +164,8 @@ where
     /// # #[cfg(feature = "tokio")]
     /// # fn run () {
     /// use hyper::Uri;
-    /// use hyper_util::client::legacy::Client;
-    /// use hyper_util::rt::TokioExecutor;
+    /// use miku_hyper_util::client::legacy::Client;
+    /// use miku_hyper_util::rt::TokioExecutor;
     /// use bytes::Bytes;
     /// use http_body_util::Full;
     ///
@@ -197,9 +197,9 @@ where
     /// # #[cfg(feature = "tokio")]
     /// # fn run () {
     /// use hyper::{Method, Request};
-    /// use hyper_util::client::legacy::Client;
+    /// use miku_hyper_util::client::legacy::Client;
     /// use http_body_util::Full;
-    /// use hyper_util::rt::TokioExecutor;
+    /// use miku_hyper_util::rt::TokioExecutor;
     /// use bytes::Bytes;
     ///
     /// let client: Client<_, Full<Bytes>> = Client::builder(TokioExecutor::new()).build_http();
@@ -970,8 +970,8 @@ fn is_schema_secure(uri: &Uri) -> bool {
 /// # #[cfg(feature = "tokio")]
 /// # fn run () {
 /// use std::time::Duration;
-/// use hyper_util::client::legacy::Client;
-/// use hyper_util::rt::TokioExecutor;
+/// use miku_hyper_util::client::legacy::Client;
+/// use miku_hyper_util::rt::TokioExecutor;
 ///
 /// let client = Client::builder(TokioExecutor::new())
 ///     .pool_idle_timeout(Duration::from_secs(30))
@@ -1033,8 +1033,8 @@ impl Builder {
     /// # #[cfg(feature = "tokio")]
     /// # fn run () {
     /// use std::time::Duration;
-    /// use hyper_util::client::legacy::Client;
-    /// use hyper_util::rt::{TokioExecutor, TokioTimer};
+    /// use miku_hyper_util::client::legacy::Client;
+    /// use miku_hyper_util::rt::{TokioExecutor, TokioTimer};
     ///
     /// let client = Client::builder(TokioExecutor::new())
     ///     .pool_idle_timeout(Duration::from_secs(30))

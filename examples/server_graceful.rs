@@ -8,8 +8,8 @@ use tokio::net::TcpListener;
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let listener = TcpListener::bind("127.0.0.1:8080").await?;
 
-    let server = hyper_util::server::conn::auto::Builder::new(hyper_util::rt::TokioExecutor::new());
-    let graceful = hyper_util::server::graceful::GracefulShutdown::new();
+    let server = miku_hyper_util::server::conn::auto::Builder::new(miku_hyper_util::rt::TokioExecutor::new());
+    let graceful = miku_hyper_util::server::graceful::GracefulShutdown::new();
     let mut ctrl_c = pin!(tokio::signal::ctrl_c());
 
     loop {
@@ -25,7 +25,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 };
                 eprintln!("incomming connection accepted: {}", peer_addr);
 
-                let stream = hyper_util::rt::TokioIo::new(Box::pin(stream));
+                let stream = miku_hyper_util::rt::TokioIo::new(Box::pin(stream));
 
                 let conn = server.serve_connection_with_upgrades(stream, hyper::service::service_fn(|_| async move {
                         tokio::time::sleep(Duration::from_secs(5)).await;  // emulate slow request

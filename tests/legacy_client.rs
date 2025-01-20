@@ -20,9 +20,9 @@ use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use hyper::body::Bytes;
 use hyper::body::Frame;
 use hyper::Request;
-use hyper_util::client::legacy::connect::{capture_connection, HttpConnector};
-use hyper_util::client::legacy::Client;
-use hyper_util::rt::{TokioExecutor, TokioIo};
+use miku_hyper_util::client::legacy::connect::{capture_connection, HttpConnector};
+use miku_hyper_util::client::legacy::Client;
+use miku_hyper_util::rt::{TokioExecutor, TokioIo};
 
 use test_utils::{DebugConnector, DebugStream};
 
@@ -47,7 +47,7 @@ fn drop_body_before_eof_closes_connection() {
     let addr = server.local_addr().unwrap();
     let rt = runtime();
     let (closes_tx, closes) = mpsc::channel::<()>(10);
-    let client = Client::builder(hyper_util::rt::TokioExecutor::new()).build(
+    let client = Client::builder(miku_hyper_util::rt::TokioExecutor::new()).build(
         DebugConnector::with_http_and_closes(HttpConnector::new(), closes_tx),
     );
     let (tx1, rx1) = oneshot::channel();

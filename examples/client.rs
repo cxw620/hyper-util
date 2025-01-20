@@ -2,7 +2,7 @@ use std::env;
 
 use http_body_util::Empty;
 use hyper::Request;
-use hyper_util::client::legacy::{connect::HttpConnector, Client};
+use miku_hyper_util::client::legacy::{connect::HttpConnector, Client};
 
 #[tokio::main(flavor = "current_thread")]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -22,7 +22,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         return Ok(());
     }
 
-    let client = Client::builder(hyper_util::rt::TokioExecutor::new()).build(HttpConnector::new());
+    let client = Client::builder(miku_hyper_util::rt::TokioExecutor::new()).build(HttpConnector::new());
 
     let req = Request::builder()
         .uri(url)

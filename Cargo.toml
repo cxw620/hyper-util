@@ -1,11 +1,11 @@
 [package]
-name = "hyper-util"
+name = "miku-hyper-util"
 version = "0.1.10"
 description = "hyper utilities"
 readme = "README.md"
 homepage = "https://hyper.rs"
-documentation = "https://docs.rs/hyper-util"
-repository = "https://github.com/hyperium/hyper-util"
+documentation = "https://docs.rs/miku-hyper-util"
+repository = "https://github.com/cxw620/hyper-util"
 license = "MIT"
 authors = ["Sean McArthur <sean@seanmonstar.com>"]
 keywords = ["http", "hyper", "hyperium"]
